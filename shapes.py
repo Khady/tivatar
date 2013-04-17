@@ -117,3 +117,8 @@ def gen_toptriangle2(color, rsc):
     tri = [(0, 0), (40, 0), (0, 40)]
     draw.polygon(tri, rsc)
     return img
+
+def gen_empty(color, rsc):
+    img = Image.new('RGB', (80, 80), (255, 255, 255))
+    draw = ImageDraw.Draw(img)
+    return img
