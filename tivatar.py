@@ -26,22 +26,40 @@ def main():
         fun(color, rsc).save('samples/%s.png' % i)
         i += 1
 
-    img = Image.new('RGB', (240, 240), (255, 255, 255))
+    # img = Image.new('RGB', (240, 240), (255, 255, 255))
+    img = Image.new('RGB', (320, 320), (255, 255, 255))
     draw = ImageDraw.Draw(img)
 
     centers = [0, 4, 8, 15]
-    center = shapes[centers[random.randint(0, 3)]](color, rsc)
-    img1 = shapes[random.randint(0, 14)](color, rsc)
-    img2 = shapes[random.randint(0, 14)](color, rsc)
+    center = shapes[centers[random.randint(0, 2)]](color, rsc)
+    img1 = shapes[random.randint(0, 13)](color, rsc)
+    img2 = shapes[random.randint(0, 13)](color, rsc)
+    img3 = shapes[random.randint(0, 13)](color, rsc)
     img.paste(img1, (0, 0))
     img.paste(img2, (80, 0))
-    img.paste(img1.rotate(270), (160, 0))
+    img.paste(img2, (160, 0))
+    img.paste(img1.rotate(270), (240, 0)) #l1
     img.paste(img2.rotate(90), (0, 80))
     img.paste(center, (80, 80))
-    img.paste(img2.rotate(270), (160, 80))
-    img.paste(img1.rotate(90), (0, 160))
-    img.paste(img2.rotate(180), (80, 160))
-    img.paste(img1.rotate(180), (160, 160))
+    img.paste(center, (160, 80))
+    img.paste(img2.rotate(270), (240, 80)) # l2
+    img.paste(img2.rotate(90), (0, 160))
+    img.paste(center, (80, 160))
+    img.paste(center, (160, 160))
+    img.paste(img2.rotate(270), (240, 160)) # l3
+    img.paste(img1.rotate(90), (0, 240))
+    img.paste(img2.rotate(180), (80, 240))
+    img.paste(img2.rotate(180), (160, 240))
+    img.paste(img1.rotate(180), (240, 240))
+    # img.paste(img1, (0, 0))
+    # img.paste(img2, (80, 0))
+    # img.paste(img1.rotate(270), (160, 0))
+    # img.paste(img2.rotate(90), (0, 80))
+    # img.paste(center, (80, 80))
+    # img.paste(img2.rotate(270), (160, 80))
+    # img.paste(img1.rotate(90), (0, 160))
+    # img.paste(img2.rotate(180), (80, 160))
+    # img.paste(img1.rotate(180), (160, 160))
     img.save('samples/final.png')
 
 if __name__ == '__main__':
