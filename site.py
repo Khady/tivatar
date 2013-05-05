@@ -7,10 +7,9 @@ def server_static(filename):
     return static_file(filename, root='./img')
 
 @route('/:identifiant')
-def generate(identifiant='World'):
-    name = sha.new(identifiant).hexdigest()
-    tivatar.generate(name)
-    return static_file('%s.png' % name, root='./img', mimetype='image/png')
+def generate(identifiant='default'):
+    tivatar.generate(identifiant)
+    return static_file('%s.png' % identifiant, root='./img', mimetype='image/png')
 
 @route('/')
 def index(identifiant='World'):
@@ -24,6 +23,7 @@ def index(identifiant='World'):
 @route('/img', method='POST')
 def do_login():
     identifiant = request.forms.get('identifiant')
-    return redirect('/%s' % identifiant)
+    id_hash = sha.new(identifiant).hexdigest()
+    return redirect('/%s' % id_hash)
 
 run(host='localhost', port=8080)
