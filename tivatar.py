@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import sha
 import random
 from shapes import *
 
@@ -11,30 +12,23 @@ shapes = [gen_square, gen_triangle1, gen_triangle2, gen_rect,
           gen_toptriangle2, gen_empty]
 centers = [0, 4, 8, 15]
 
-
-def random_shaded_color(color):
-    '''
-    Take a color and shade it randomly with +50, 0 or -50.
-    '''
-    shade = itertools.repeat(random.choice((+50, 0, -50)), 3)
-    shaded_color = tuple(map(operator.add, color, shade))
-    return shaded_color
-
 def gen_references_shapes():
     i = 0
     for fun in shapes:
         fun(color, rsc).save('samples/%s.png' % i)
         i += 1
 
+# ident doit etre un hexdigest d'un sha1
 def generate(ident):
-    color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-    rsc = random_shaded_color(color)
-    img = Image.new('RGB', (320, 320), (255, 255, 255))
+    n = 5
+    unique_values = [int(ident[i:i+n], 16) for i in xrange(0, len(ident), n)]
+    color = (unique_values[0] % 256, unique_values[1] % 256, unique_values[2] % 256)
+    img = Image.new('RGB', (320, 320), (unique_values[3] % 256, unique_values[3] % 256, unique_values[3] % 256))
     draw = ImageDraw.Draw(img)
-    center = shapes[centers[random.randint(0, 3)]](color, rsc)
-    img1 = shapes[random.randint(0, 13)](color, rsc)
-    img2 = shapes[random.randint(0, 13)](color, rsc)
-    img3 = shapes[random.randint(0, 13)](color, rsc)
+    center = shapes[centers[unique_values[4] % 4]](color)
+    img1 = shapes[unique_values[5] % 14](color)
+    img2 = shapes[unique_values[6] % 14](color)
+    img3 = shapes[unique_values[7] % 14](color)
     img.paste(img1, (0, 0)) # l1
     img.paste(img2, (80, 0))
     img.paste(img2, (160, 0))
@@ -54,4 +48,8 @@ def generate(ident):
     img.save('img/%s.png' % ident)
 
 if __name__ == '__main__':
-    generate()
+    import sys
+    if len(sys.argv) < 2:
+        print "this tool takes 1 arg"
+    else:
+        generate(sha.new(sys.argv[1]).hexdigest())
