@@ -27,7 +27,7 @@ def index(identifiant='World'):
 @route('/img', method='POST')
 def do_login():
     identifiant = request.forms.get('identifiant')
-    # id_hash = sha.new(identifiant).hexdigest()
-    return redirect('/%s' % identifiant)
+    id_hash = sha.new(identifiant).hexdigest()
+    return redirect('/hex/%s' % id_hash)
 
-run(host='localhost', port=8080)
+run(host='0.0.0.0', port=8080)

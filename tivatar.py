@@ -25,7 +25,7 @@ def generate(ident):
     color = (unique_values[0] % 256, unique_values[1] % 256, unique_values[2] % 256)
     img = Image.new('RGB', (320, 320), (unique_values[3] % 256, unique_values[3] % 256, unique_values[3] % 256))
     draw = ImageDraw.Draw(img)
-    center = shapes[centers[unique_values[4] % 4]](color)
+    center = shapes[unique_values[4] % 14](color)
     img1 = shapes[unique_values[5] % 14](color)
     img2 = shapes[unique_values[6] % 14](color)
     img3 = shapes[unique_values[7] % 14](color)
@@ -35,11 +35,11 @@ def generate(ident):
     img.paste(img1.rotate(270), (240, 0))
     img.paste(img2.rotate(90), (0, 80)) # l2
     img.paste(center, (80, 80))
-    img.paste(center, (160, 80))
+    img.paste(center.rotate(270), (160, 80))
     img.paste(img2.rotate(270), (240, 80))
     img.paste(img2.rotate(90), (0, 160)) # l3
-    img.paste(center, (80, 160))
-    img.paste(center, (160, 160))
+    img.paste(center.rotate(90), (80, 160))
+    img.paste(center.rotate(180), (160, 160))
     img.paste(img2.rotate(270), (240, 160))
     img.paste(img1.rotate(90), (0, 240)) # l4
     img.paste(img2.rotate(180), (80, 240))
