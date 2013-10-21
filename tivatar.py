@@ -1,25 +1,24 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import Image
+import ImageDraw
 import sha
 import random
-from shapes import *
+import shapes
+from inspect import getmembers, isfunction
 
-shapes = [gen_square, gen_triangle1, gen_triangle2, gen_rect,
-          gen_losange, gen_weird, gen_triforce, gen_triangle3,
-          gen_littlesquare, gen_2triangle, gen_topleftcornsquare,
-          gen_bottriangle1, gen_bottriangle2, gen_toptriangle1,
-          gen_toptriangle2, gen_empty]
-centers = [0, 4, 8, 15]
+shapes = [o[1] for o in getmembers(shapes) if isfunction(o[1])]
 
-def gen_references_shapes():
+def gen_references_shapes(dir="./"):
     i = 0
     for fun in shapes:
-        fun(color, rsc).save('samples/%s.png' % i)
+        fun(color).save('./%s.png' % i)
         i += 1
 
-# ident doit etre un hexdigest d'un sha1
 def generate(ident):
+    """ident should be an hexdigest of a sha1
+    """
     n = 5
     unique_values = [int(ident[i:i+n], 16) for i in xrange(0, len(ident), n)]
     color = (unique_values[0] % 256, unique_values[1] % 256, unique_values[2] % 256)
@@ -45,11 +44,12 @@ def generate(ident):
     img.paste(img2.rotate(180), (80, 240))
     img.paste(img2.rotate(180), (160, 240))
     img.paste(img1.rotate(180), (240, 240))
-    img.save('img/%s.png' % ident)
+    return (ident, img)
 
 if __name__ == '__main__':
     import sys
     if len(sys.argv) < 2:
         print "this tool takes 1 arg"
     else:
-        generate(sha.new(sys.argv[1]).hexdigest())
+        image = generate(sha.new(sys.argv[1]).hexdigest())
+        image[1].save('img/%s.png' % image[0])
