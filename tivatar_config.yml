@@ -1,2 +1,3 @@
 folder: ./img
 format: jpeg
+default_size: 256

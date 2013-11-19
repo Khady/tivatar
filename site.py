@@ -39,9 +39,12 @@ def do_login():
     return redirect('/hex/%s' % id_hash)
 
 if __name__ == '__main__':
-    with open('tivatar_config.yml', 'r') as f:
-        yaml_content = f.read()
-        f.close()
-        CONFIG = yaml.load(yaml_content)
-        print CONFIG
-    run(host='0.0.0.0', port=8080)
+    try:
+        with open('tivatar_config.yml', 'r') as f:
+            yaml_content = f.read()
+            f.close()
+            CONFIG = yaml.load(yaml_content)
+            print CONFIG
+            run(host='0.0.0.0', port=8080)
+    except IOError:
+        print "Can't open the config file."
