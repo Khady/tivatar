@@ -26,7 +26,7 @@ def generate(identifiant='default'):
     return generate_hex(sha.new(identifiant).hexdigest())
 
 @route('/')
-def index(identifiant='World'):
+def index():
     return '''
         <form action="/img" method="post">
             identifiant:    <input type="text" name="identifiant" />

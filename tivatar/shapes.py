@@ -51,11 +51,11 @@ def gen_weird(color, size):
 def gen_triforce(color, size):
     img = Image.new('RGB', (size, size), (255, 255, 255))
     draw = ImageDraw.Draw(img)
-    tri = [(0, size), (20, size / 2), (size / 2, size)]
+    tri = [(0, size), (size / 4, size / 2), (size / 2, size)]
     draw.polygon(tri, color)
-    tri = [(20, size / 2), (size / 2, 0), (60, size / 2)]
+    tri = [(size / 4, size / 2), (size / 2, 0), ((size / 4) * 3, size / 2)]
     draw.polygon(tri, color)
-    tri = [(size / 2, size), (60, size / 2), (size, size)]
+    tri = [(size / 2, size), ((size / 4) * 3, size / 2), (size, size)]
     draw.polygon(tri, color)
     return img
 
@@ -69,7 +69,8 @@ def gen_triangle3(color, size):
 def gen_littlesquare(color, size):
     img = Image.new('RGB', (size, size), (255, 255, 255))
     draw = ImageDraw.Draw(img)
-    tri = [(20, 20), (60, 20), (60, 60), (20, 60)]
+    tri = [(size / 4, size / 4), ((size / 4) * 3, size / 4),
+            ((size / 4) * 3, (size / 4) * 3), (size / 4, (size / 4) * 3)]
     draw.polygon(tri, color)
     return img
 
