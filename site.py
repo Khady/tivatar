@@ -2,20 +2,22 @@
 # coding: utf-8
 
 import sha
-import tivatar
 import yaml
+from tivatar.tivatar import Tivatar
 from bottle import route, run, template, static_file, request, redirect
 
 CONFIG = {}
 
 @route('/img/<filename>')
 def server_static(filename):
-    return static_file(filename, root='./img')
+    return static_file("%s.%s" % (filename, CONFIG['format']), root='./img')
 
 @route('/hex/:identifiant')
 def generate_hex(identifiant='default'):
-    image = tivatar.generate(identifiant)
-    image[1].save('%s/%s.%s' % (CONFIG['folder'], image[0], CONFIG['format']))
+    image = Tivatar("", CONFIG['default_size'], filetype=CONFIG['format'],
+            ident_hex=identifiant)
+    image.generate()
+    image.save(CONFIG['folder'])
     return static_file('%s.%s' % (identifiant, CONFIG['format']), root=CONFIG['folder'],
         mimetype='image/%s' % CONFIG['format'])
 
@@ -33,7 +35,7 @@ def index(identifiant='World'):
     '''
 
 @route('/img', method='POST')
-def do_login():
+def image():
     identifiant = request.forms.get('identifiant')
     id_hash = sha.new(identifiant).hexdigest()
     return redirect('/hex/%s' % id_hash)
@@ -44,7 +46,6 @@ if __name__ == '__main__':
             yaml_content = f.read()
             f.close()
             CONFIG = yaml.load(yaml_content)
-            print CONFIG
             run(host='0.0.0.0', port=8080)
     except IOError:
         print "Can't open the config file."

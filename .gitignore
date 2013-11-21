@@ -1,3 +1,10 @@
 *.png
 *.pyc
 *~
+bin
+lib
+include
+*.jpg
+*.jpeg
+*.swp
+.Python

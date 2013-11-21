@@ -1,3 +1,4 @@
 folder: ./img
 format: jpeg
-default_size: 256
+default_size: 1200
+max_images: 100
