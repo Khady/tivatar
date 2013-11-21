@@ -44,7 +44,6 @@ if __name__ == '__main__':
     try:
         with open('tivatar_config.yml', 'r') as f:
             yaml_content = f.read()
-            f.close()
             CONFIG = yaml.load(yaml_content)
             run(host='0.0.0.0', port=8080)
     except IOError:

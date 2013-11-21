@@ -68,5 +68,6 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         print "this tool takes 1 arg"
     else:
-        image = generate(sha.new(sys.argv[1]).hexdigest())
-        image[1].save('img/%s.png' % image[0])
+        image = Tivatar(sys.argv[1], 320)
+        image.generate()
+        image.save("./")
